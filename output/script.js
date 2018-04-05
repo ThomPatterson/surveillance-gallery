@@ -14,6 +14,7 @@ function checkForUnloadedImages($hour) {
   if ($unloadedImages.length > 100) {
     $unloadedImages.slice(0, 100).each(function() {
       loadImages($(this));
+      updateMessage($hour);
     });
   } else {
     $unloadedImages.each(function() {
@@ -29,4 +30,10 @@ function loadImages($imageWrapper) {
   $imageWrapper.children('img').attr('src', url);
   $imageWrapper.removeClass('notLoaded');
   $imageWrapper.addClass('loaded');
+}
+
+function updateMessage($hour) {
+  let totalImages = $hour.children('.imageWrapper').length;
+  let totalLoaded = $hour.children('.loaded').length;
+  $hour.find('.imageCount').text('(' + totalLoaded + ' of ' + totalImages + ' loaded)');
 }
