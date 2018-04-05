@@ -1,5 +1,10 @@
 .imageWrapper {
   float: left;
+  display: none;
+}
+
+.notLoaded {
+  display: none;
 }
 
 .imageWrapper img {

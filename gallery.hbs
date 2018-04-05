@@ -19,8 +19,8 @@
           <h2>{{Hour @key}} <span class="imageCount">({{ImageCount this}} images)</span></h2>
           {{#each this}}
             {{#each this}}
-              <div class="imageWrapper">
-                <img src="{{this}}" />
+              <div class="imageWrapper notLoaded" data-url="file://{{this}}">
+                <img src="" />
                 <p>{{Timestamp this}}</p>
               </div>
               <!-- /imageWrapper -->

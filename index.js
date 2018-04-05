@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const childProc = require('child_process');
 const Handlebars = require('handlebars');
 
 //to begin, assume the remote directory is mounted locally on this machine
@@ -44,153 +45,153 @@ Handlebars.registerHelper('Timestamp', (filePath) => {
 });
 
 function getAvailableDates() {
-	let data = {};
-	return new Promise((resolve, reject) => {
-		fs.readdir(dvrWorkDir, (err, fileNames) => {
+  let data = {};
+  return new Promise((resolve, reject) => {
+    fs.readdir(dvrWorkDir, (err, fileNames) => {
 
-			if (err) reject('Unable to read directory ' + dvrWorkDir + '  ' + err);
+      if (err) reject('Unable to read directory ' + dvrWorkDir + '  ' + err);
 
-			let datePattern = /[\d]{4}-[\d]{2}-[\d]{2}/
+      let datePattern = /[\d]{4}-[\d]{2}-[\d]{2}/
 
-			fileNames.forEach(fileName => {
-				if (datePattern.test(fileName)) {
-					data[fileName] = {};
-				}
-			});
+      fileNames.forEach(fileName => {
+        if (datePattern.test(fileName)) {
+          data[fileName] = {};
+        }
+      });
 
-			resolve(data);
-		})
-	});
+      resolve(data);
+    })
+  });
 }
 
 function getAvailableHours(data) {
-	return new Promise((resolve, reject) => {
-		let promises = [];
-		for (date in data) {
-			let dateDir = path.join(dvrWorkDir, date, jpgDir);
+  return new Promise((resolve, reject) => {
+    let promises = [];
+    for (date in data) {
+      let dateDir = path.join(dvrWorkDir, date, jpgDir);
 
-			promises.push(new Promise((res, rej) => {
-				let keyDate = date;
-				fs.readdir(dateDir, (err, fileNames) => {
+      promises.push(new Promise((res, rej) => {
+        let keyDate = date;
+        fs.readdir(dateDir, (err, fileNames) => {
 
-					if (err) rej('Unable to read directory ' + dateDir + '  ' + err);
+          if (err) rej('Unable to read directory ' + dateDir + '  ' + err);
 
-					fileNames.forEach(fileName => {
-						data[keyDate]['h' + fileName] = {}
-					});
+          fileNames.forEach(fileName => {
+            data[keyDate]['h' + fileName] = {}
+          });
 
-					res();
+          res();
 
-				});
-			}));
-		}
+        });
+      }));
+    }
 
-		Promise.all(promises).then(() => {
-			return resolve(data);
-		}).catch(err => {
-			return reject(err);
-		});
-	});
+    Promise.all(promises).then(() => {
+      return resolve(data);
+    }).catch(err => {
+      return reject(err);
+    });
+  });
 }
 
 function getAvailableMinutes(data) {
-	return new Promise((resolve, reject) => {
-		let promises = [];
-		for (date in data) {
-			for (hour in data[date]) {
-				let dir = path.join(dvrWorkDir, date, jpgDir, hour.slice(1));
+  return new Promise((resolve, reject) => {
+    let promises = [];
+    for (date in data) {
+      for (hour in data[date]) {
+        let dir = path.join(dvrWorkDir, date, jpgDir, hour.slice(1));
 
-				promises.push(new Promise((res, rej) => {
-					let keyDate = date;
-					let keyHour = hour;
+        promises.push(new Promise((res, rej) => {
+          let keyDate = date;
+          let keyHour = hour;
 
-					fs.readdir(dir, (err, fileNames) => {
+          fs.readdir(dir, (err, fileNames) => {
 
-						if (err) rej('Unable to read directory ' + dir + '  ' + err);
+            if (err) rej('Unable to read directory ' + dir + '  ' + err);
 
-						fileNames.forEach(fileName => {
-							data[keyDate][keyHour]['m' + fileName] = [];
-						});
+            fileNames.forEach(fileName => {
+              data[keyDate][keyHour]['m' + fileName] = [];
+            });
 
-						res();
-					});
+            res();
+          });
 
-				}));
-			}
-		}
+        }));
+      }
+    }
 
-		Promise.all(promises).then(() => {
-			return resolve(data);
-		}).catch(err => {
-			return reject(err);
-		});
-	});
+    Promise.all(promises).then(() => {
+      return resolve(data);
+    }).catch(err => {
+      return reject(err);
+    });
+  });
 }
 
 function getAvailableSnapshots(data) {
-	return new Promise((resolve, reject) => {
-		let promises = [];
-		for (date in data) {
-			for (hour in data[date]) {
-				for (minute in data[date][hour]) {
-					let dir = path.join(dvrWorkDir, date, jpgDir, hour.slice(1), minute.slice(1));
+  return new Promise((resolve, reject) => {
+    let promises = [];
+    for (date in data) {
+      for (hour in data[date]) {
+        for (minute in data[date][hour]) {
+          let dir = path.join(dvrWorkDir, date, jpgDir, hour.slice(1), minute.slice(1));
 
-					promises.push(new Promise((res, rej) => {
-						let keyDate = date;
-						let keyHour = hour;
-						let keyMin = minute;
+          promises.push(new Promise((res, rej) => {
+            let keyDate = date;
+            let keyHour = hour;
+            let keyMin = minute;
 
-						fs.readdir(dir, (err, fileNames) => {
+            fs.readdir(dir, (err, fileNames) => {
 
-							if (err) rej('Unable to read directory ' + dir + '  ' + err);
+              if (err) rej('Unable to read directory ' + dir + '  ' + err);
 
-							fileNames.forEach(fileName => {
-								data[keyDate][keyHour][keyMin].push(path.join(dir, fileName));
-							});
+              fileNames.forEach(fileName => {
+                data[keyDate][keyHour][keyMin].push(path.join(dir, fileName));
+              });
 
-							res();
-						});
+              res();
+            });
 
-					}));
-				}
-			}
-		}
+          }));
+        }
+      }
+    }
 
-		Promise.all(promises).then(() => {
-			return resolve(data);
-		}).catch(err => {
-			return reject(err);
-		});
-	});
+    Promise.all(promises).then(() => {
+      return resolve(data);
+    }).catch(err => {
+      return reject(err);
+    });
+  });
 }
 
 function getTemplate() {
-	return new Promise((resolve, reject) => {
-		fs.readFile('./gallery.hbs', (err, data) => {
-			if (err) return reject(err);
-			resolve(data.toString());
-		})
-	});
+  return new Promise((resolve, reject) => {
+    fs.readFile('./gallery.hbs', (err, data) => {
+      if (err) return reject(err);
+      resolve(data.toString());
+    })
+  });
 }
 
 function writeHtml(html) {
-	fs.writeFile('output/gallery.html', html, function(err) {
-		if (err) {
-			return console.error(err);
-		}
-
-		console.log("The file was saved!");
-	});
+  return new Promise((resolve, reject) => {
+    let filePath = 'output/gallery.html';
+    fs.writeFile(filePath, html, function(err) {
+      if (err) return reject(err);
+      resolve(filePath);
+    });
+  });
 }
 
 function filterDates(data, days) {
   let filteredDates = {};
   let now = new Date();
-  let timeLimit = days*24*60*60*1000;
+  let timeLimit = days * 24 * 60 * 60 * 1000;
   for (date in data) {
     let datePattern = /([\d]{4})-([\d]{2})-([\d]{2})/
     let dateParts = datePattern.exec(date);
-    let fileDate = new Date(dateParts[1], dateParts[2]-1, dateParts[3]);
+    let fileDate = new Date(dateParts[1], dateParts[2] - 1, dateParts[3]);
     if ((now - fileDate) < timeLimit) {
       filteredDates[date] = data[date];
     }
@@ -200,24 +201,27 @@ function filterDates(data, days) {
 
 let galleryTemplate;
 getTemplate()
-	.then(templateSrc => {
-		galleryTemplate = Handlebars.compile(templateSrc);
-		return getAvailableDates();
-	})
-	.then(data => {
-    let filteredDates = filterDates(data, 1);
-		return getAvailableHours(filteredDates);
-	})
-	.then(data => {
-		return getAvailableMinutes(data);
-	})
-	.then(data => {
-		return getAvailableSnapshots(data);
-	}).then(data => {
-		let html = galleryTemplate({
-			date: data
-		});
-		writeHtml(html);
-	}).catch(err => {
-		console.error(err);
-	});
+  .then(templateSrc => {
+    galleryTemplate = Handlebars.compile(templateSrc);
+    return getAvailableDates();
+  })
+  .then(data => {
+    let filteredDates = filterDates(data, 2);
+    return getAvailableHours(filteredDates);
+  })
+  .then(data => {
+    return getAvailableMinutes(data);
+  })
+  .then(data => {
+    return getAvailableSnapshots(data);
+  }).then(data => {
+    let html = galleryTemplate({
+      date: data
+    });
+    return writeHtml(html);
+  }).then(filePath => {
+    let cmd = 'open -a "Google Chrome" file://' + __dirname + '/' + filePath;
+    childProc.exec(cmd);
+  }).catch(err => {
+    console.error(err);
+  });
