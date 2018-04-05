@@ -1,0 +1,18 @@
+.imageWrapper {
+  float: left;
+}
+
+.imageWrapper img {
+  width: 300px;
+}
+
+.hour h2 {
+  background-color: lightblue;
+  cursor: pointer;
+  clear: both;
+}
+
+.hour h2 .imageCount {
+  font-size: 16px;
+  font-weight: normal;
+}

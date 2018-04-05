@@ -1,19 +1,37 @@
-Hello World!
-{{#each date}}
-    Date: {{@key}} Value = {{this}}
+<!DOCTYPE html>
+<html>
 
-    {{#each this}}
-      Hour: {{@key}}
+<head>
+  <meta charset="UTF-8">
+  <title>Snapshot Gallery</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body>
+  {{#each date}}
+    <div class="day">
+      <h1>{{@key}}</h1>
 
       {{#each this}}
-        Minute: {{@key}}
-
-        {{#each this}}
-          Image: {{this}}
-        {{/each}}
-
+        <div class="hour">
+          <h2>{{Hour @key}} <span class="imageCount">({{ImageCount this}} images)</span></h2>
+          {{#each this}}
+            {{#each this}}
+              <div class="imageWrapper">
+                <img src="{{this}}" />
+                <p>{{Timestamp this}}</p>
+              </div>
+              <!-- /imageWrapper -->
+            {{/each}}
+          {{/each}}
+        </div>
+        <!-- /hour -->
       {{/each}}
+    </div>
+    <!-- /day -->
+  {{/each}}
+</body>
 
-    {{/each}}
-
-{{/each}}
+</html>
