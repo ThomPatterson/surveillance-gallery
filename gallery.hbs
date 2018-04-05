@@ -1,0 +1,19 @@
+Hello World!
+{{#each date}}
+    Date: {{@key}} Value = {{this}}
+
+    {{#each this}}
+      Hour: {{@key}}
+
+      {{#each this}}
+        Minute: {{@key}}
+
+        {{#each this}}
+          Image: {{this}}
+        {{/each}}
+
+      {{/each}}
+
+    {{/each}}
+
+{{/each}}
