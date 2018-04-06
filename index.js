@@ -59,10 +59,15 @@ Handlebars.registerHelper('ImageCountHour', (hourData) => {
 
 Handlebars.registerHelper('Timestamp', (filePath) => {
   let timeParts = /([\d]{2})\/([\d]{2})\/([\d]{2})([^/]+)\.jpg/.exec(filePath);
-  let hour = timeParts[1];
+  let hourInt = parseInt(timeParts[1]);
   let min = timeParts[2];
   let sec = timeParts[3];
-  return hour + ':' + min + ':' + sec;
+  let period = 'AM';
+  if (hourInt > 12) {
+    hourInt = hourInt - 12;
+    period = 'PM';
+  }
+  return hourInt + ':' + min + ':' + sec + ' ' + period;
 });
 
 function getAvailableDates() {
@@ -245,7 +250,6 @@ getTemplate()
     return writeHtml(html);
   }).then(filePath => {
     let cmd = 'open -a "Google Chrome" "file://' + __dirname + '/' + filePath + '"';
-    console.log(cmd);
     childProc.exec(cmd);
   }).catch(err => {
     console.error(err);
