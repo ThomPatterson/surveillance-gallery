@@ -10,28 +10,38 @@
 </head>
 
 <body>
-  {{#each date}}
-    <div class="day">
-      <h1>{{Date @key}}</h1>
 
-      {{#each this}}
-        <div class="hour">
-          <h2>{{Hour @key}} <span class="imageCount">({{ImageCount this}} images)</span></h2>
+  <ul class="accordion">
+    {{#each date}}
+      <li>
+        <a class="toggle" href="javascript:void(0);">{{Date @key}}</a>
+        <ul class="inner">
           {{#each this}}
-            {{#each this}}
-              <div class="imageWrapper notLoaded" data-url="file://{{this}}">
-                <img src="" />
-                <p>{{Timestamp this}}</p>
-              </div>
-              <!-- /imageWrapper -->
-            {{/each}}
+            <li>
+              <a class="toggle hour" href="javascript:void(0);">{{Hour @key}} <span class="imageCount">({{ImageCount this}} images)</span></a>
+              <ul class="inner">
+                {{#each this}}
+                  <li>
+                    {{#each this}}
+                      <div class="imageWrapper notLoaded" data-url="file://{{this}}">
+                        <img src="" />
+                        <p>{{Timestamp this}}</p>
+                      </div>
+                      <!-- /imageWrapper -->
+                    {{/each}}
+                  </li>
+                {{/each}}
+              </ul>
+            </li>
           {{/each}}
-        </div>
+        </ul>
         <!-- /hour -->
-      {{/each}}
-    </div>
-    <!-- /day -->
-  {{/each}}
+      </li>
+      <!-- /day -->
+    {{/each}}
+  </ul>
+
+
 </body>
 
 </html>

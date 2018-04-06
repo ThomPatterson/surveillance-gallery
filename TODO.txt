@@ -1,6 +1,8 @@
 Better accordion view for galleryTemplate
 Hour header scrolls with screen until next hour header
 
+automatically have today expanded
+
 Better formatting for image wrappers
 
 Click on an image to see it full screen (modal)
