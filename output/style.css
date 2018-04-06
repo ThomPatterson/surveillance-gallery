@@ -78,3 +78,11 @@ ul li a.toggle:hover {
   margin: 0px;
   font-size: 0.8em;
 }
+
+ul li a.hour {
+  background: rgba(130, 171, 130, 1);
+}
+
+ul li a.hour:hover {
+  background: rgba(130, 171, 130, 0.5);
+}
