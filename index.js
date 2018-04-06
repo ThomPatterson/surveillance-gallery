@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const childProc = require('child_process');
 const Handlebars = require('handlebars');
+const moment = require('moment');
 
 //to begin, assume the remote directory is mounted locally on this machine
 let dvrWorkDir = '/Volumes/backyard-ptz';
@@ -12,12 +13,17 @@ let jpgDir = '/001/jpg';
 //set to 1 to just get today's snapshots
 //set to 2 to get yesterday and today, etc.
 //set to something like 999999 to get all available days
-let daysToFetch = 9999;
+let daysToFetch = 7;
 
 //store jpg paths in multi dimension array, [date][hour][minute] = [paths]
 
 //TODO
 //using hours and minutes (str) as object keys results in sorting where 10, 20, 30, etc come before 00, 01.  Resorted to prefixing time with letter.
+
+Handlebars.registerHelper('Date', (dateStr) => {
+  var date = moment(dateStr);
+  return date.format('MMMM DD, YYYY (ddd)');
+});
 
 Handlebars.registerHelper('Hour', (hour) => {
   var hourInt = parseInt(hour.slice(1));

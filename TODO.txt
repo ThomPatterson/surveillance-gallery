@@ -1,5 +1,3 @@
-improve support for number of days to show
-
 Better accordion view for galleryTemplate
 Hour header scrolls with screen until next hour header
 
