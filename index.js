@@ -9,6 +9,11 @@ let dvrWorkDir = '/Volumes/backyard-ptz';
 //also assuming there is only one camera
 let jpgDir = '/001/jpg';
 
+//set to 1 to just get today's snapshots
+//set to 2 to get yesterday and today, etc.
+//set to something like 999999 to get all available days
+let daysToFetch = 9999;
+
 //store jpg paths in multi dimension array, [date][hour][minute] = [paths]
 
 //TODO
@@ -209,7 +214,7 @@ getTemplate()
     return getAvailableDates();
   })
   .then(data => {
-    let filteredDates = filterDates(data, 3);
+    let filteredDates = filterDates(data, daysToFetch);
     return getAvailableHours(filteredDates);
   })
   .then(data => {

@@ -1,0 +1,10 @@
+improve support for number of days to show
+
+Better accordion view for galleryTemplate
+Hour header scrolls with screen until next hour header
+
+Better formatting for image wrappers
+
+Click on an image to see it full screen (modal)
+
+Link to DAV
