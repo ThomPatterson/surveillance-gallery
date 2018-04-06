@@ -101,24 +101,31 @@ ul li a.hour:hover {
 }
 
 #modalClose, #modalLeft, #modalRight {
-  font-size: 75px;
+  font-size: 70px;
   position: fixed;
   cursor: pointer;
+  background-color: #fff;
+  padding: 0.1em;
 }
 
 #modalClose {
   top: 5%;
   left: 5%;
-  margin: -45px 0px 0px -45px;
+  margin: -20px 0px 0px -20px;
+  border-radius: 45px;
 }
 
 #modalLeft {
   top: 50%;
-  margin-left: -65px;
+  margin-left: -70px;
+  border-top-left-radius: 45px;
+  border-bottom-left-radius: 45px;
 }
 
 #modalRight {
   top: 50%;
   left: 95%;
   margin-left: -10px;
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
 }
