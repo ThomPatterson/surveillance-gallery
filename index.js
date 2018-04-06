@@ -47,9 +47,12 @@ Handlebars.registerHelper('Timestamp', (filePath) => {
 function getAvailableDates() {
   let data = {};
   return new Promise((resolve, reject) => {
+
+    if (!fs.existsSync(dvrWorkDir)) return reject(dvrWorkDir + ' is unavailable');
+
     fs.readdir(dvrWorkDir, (err, fileNames) => {
 
-      if (err) reject('Unable to read directory ' + dvrWorkDir + '  ' + err);
+      if (err) return reject('Unable to read directory ' + dvrWorkDir + '  ' + err);
 
       let datePattern = /[\d]{4}-[\d]{2}-[\d]{2}/
 
@@ -59,7 +62,7 @@ function getAvailableDates() {
         }
       });
 
-      resolve(data);
+      return resolve(data);
     })
   });
 }
@@ -74,13 +77,13 @@ function getAvailableHours(data) {
         let keyDate = date;
         fs.readdir(dateDir, (err, fileNames) => {
 
-          if (err) rej('Unable to read directory ' + dateDir + '  ' + err);
+          if (err) return rej('Unable to read directory ' + dateDir + '  ' + err);
 
           fileNames.forEach(fileName => {
             data[keyDate]['h' + fileName] = {}
           });
 
-          res();
+          return res();
 
         });
       }));
@@ -107,13 +110,13 @@ function getAvailableMinutes(data) {
 
           fs.readdir(dir, (err, fileNames) => {
 
-            if (err) rej('Unable to read directory ' + dir + '  ' + err);
+            if (err) return rej('Unable to read directory ' + dir + '  ' + err);
 
             fileNames.forEach(fileName => {
               data[keyDate][keyHour]['m' + fileName] = [];
             });
 
-            res();
+            return res();
           });
 
         }));
@@ -143,13 +146,13 @@ function getAvailableSnapshots(data) {
 
             fs.readdir(dir, (err, fileNames) => {
 
-              if (err) rej('Unable to read directory ' + dir + '  ' + err);
+              if (err) return rej('Unable to read directory ' + dir + '  ' + err);
 
               fileNames.forEach(fileName => {
                 data[keyDate][keyHour][keyMin].push(path.join(dir, fileName));
               });
 
-              res();
+              return res();
             });
 
           }));
@@ -206,7 +209,7 @@ getTemplate()
     return getAvailableDates();
   })
   .then(data => {
-    let filteredDates = filterDates(data, 2);
+    let filteredDates = filterDates(data, 3);
     return getAvailableHours(filteredDates);
   })
   .then(data => {
