@@ -244,7 +244,8 @@ getTemplate()
     });
     return writeHtml(html);
   }).then(filePath => {
-    let cmd = 'open -a "Google Chrome" file://' + __dirname + '/' + filePath;
+    let cmd = 'open -a "Google Chrome" "file://' + __dirname + '/' + filePath + '"';
+    console.log(cmd);
     childProc.exec(cmd);
   }).catch(err => {
     console.error(err);
