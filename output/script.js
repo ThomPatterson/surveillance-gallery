@@ -138,6 +138,7 @@ function setupModalEventHandlers() {
 	//button clicks
 	$('#modalClose').click(function() {
 		$('#modal').remove();
+		$('#focused').removeAttr('id');
 	});
 	$('#modalLeft').click(function() {
 		changeModalImage(false);
@@ -155,7 +156,7 @@ function changeModalImage(forwardDirection) {
 		$activeImageWrapper.removeAttr('id');
 		showModalForImage($siblingImageWrappers.eq(currentIndex + 1));
 	} else if (!forwardDirection && currentIndex > 0) {
-    $activeImageWrapper.removeAttr('id');
+		$activeImageWrapper.removeAttr('id');
 		showModalForImage($siblingImageWrappers.eq(currentIndex - 1));
-  }
+	}
 }
