@@ -63,6 +63,7 @@ ul li a.toggle:hover {
   background: #fff;
   padding: 0.5em;
   margin: 0.5em;
+  cursor: pointer;
 }
 
 .notLoaded {
@@ -85,4 +86,39 @@ ul li a.hour {
 
 ul li a.hour:hover {
   background: rgba(130, 171, 130, 0.5);
+}
+
+#modal {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+
+}
+
+#modal img {
+  width: 100%;
+}
+
+#modalClose, #modalLeft, #modalRight {
+  font-size: 75px;
+  position: fixed;
+  cursor: pointer;
+}
+
+#modalClose {
+  top: 5%;
+  left: 5%;
+  margin: -45px 0px 0px -45px;
+}
+
+#modalLeft {
+  top: 50%;
+  margin-left: -65px;
+}
+
+#modalRight {
+  top: 50%;
+  left: 95%;
+  margin-left: -10px;
 }
