@@ -14,7 +14,7 @@
   <ul class="accordion">
     {{#each date}}
       <li>
-        <a class="toggle" href="javascript:void(0);">{{Date @key}} ({{ImageCountDay this}} images)</a>
+        <a class="toggle" {{#if @last}}id="newestDay"{{/if}} href="javascript:void(0);">{{Date @key}} ({{ImageCountDay this}} images)</a>
         <ul class="inner">
           {{#each this}}
             <li>

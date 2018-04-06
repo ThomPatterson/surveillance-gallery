@@ -1,5 +1,3 @@
-Show image count at day level
-
 automatically have today expanded
 
 Better formatting for image wrappers

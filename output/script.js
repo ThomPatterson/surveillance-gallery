@@ -14,6 +14,12 @@ $(document).ready(function() {
     }
   });
 
+  //expand and scroll to the most recent day
+  $('#newestDay').click();
+  $('html, body').animate({
+    scrollTop: $('#newestDay').offset().top
+  }, 2000);
+
 });
 
 function setupAccordionOneOpen() {
