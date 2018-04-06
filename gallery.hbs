@@ -21,16 +21,16 @@
             <li>
               <a class="toggle hour" href="javascript:void(0);">{{Hour @key}} <span class="imageCount">({{ImageCountHour this}} images)</span></a>
               <ul class="inner">
-                {{#each this}}
-                  <li>
+                <li>
+                  {{#each this}}
                     {{#each this}}
                       <div class="imageWrapper notLoaded" data-url="file://{{this}}">
                         <img src="#" alt="Snapshot at {{Timestamp this}}" />
                         <p>{{Timestamp this}}</p>
                       </div>
                     {{/each}}
-                  </li>
-                {{/each}}
+                  {{/each}}
+                </li>
               </ul>
             </li>
           {{/each}}

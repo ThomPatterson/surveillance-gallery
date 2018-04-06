@@ -140,20 +140,22 @@ function setupModalEventHandlers() {
 		$('#modal').remove();
 	});
 	$('#modalLeft').click(function() {
-		$activeImageWrapper = $('#focused');
-		$prevImageWrapper = $activeImageWrapper.prev();
-		if ($prevImageWrapper.length > 0) {
-			$activeImageWrapper.removeAttr('id');
-			showModalForImage($prevImageWrapper);
-		}
+		changeModalImage(false);
 	});
 	$('#modalRight').click(function() {
-		$activeImageWrapper = $('#focused');
-		$nextImageWrapper = $activeImageWrapper.next();
-		if ($nextImageWrapper.length > 0) {
-			$activeImageWrapper.removeAttr('id');
-			showModalForImage($nextImageWrapper);
-		}
+		changeModalImage(true);
 	});
+}
 
+function changeModalImage(forwardDirection) {
+	$activeImageWrapper = $('#focused');
+	$siblingImageWrappers = $activeImageWrapper.parent().children('.loaded');
+	let currentIndex = $siblingImageWrappers.index($activeImageWrapper);
+	if (forwardDirection && currentIndex < ($siblingImageWrappers.length - 1)) {
+		$activeImageWrapper.removeAttr('id');
+		showModalForImage($siblingImageWrappers.eq(currentIndex + 1));
+	} else if (!forwardDirection && currentIndex > 0) {
+    $activeImageWrapper.removeAttr('id');
+		showModalForImage($siblingImageWrappers.eq(currentIndex - 1));
+  }
 }
