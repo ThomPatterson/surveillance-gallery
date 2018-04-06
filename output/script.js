@@ -55,7 +55,7 @@ function loadImages($hourWrapper) {
     for (let i = 0; i <= numUnloadedImages; i += everyNthImage) {
       loadImage($unloadedImages.eq(i));
     }
-    updateMessage($hour, $hourWrapper.find('.loaded').length, numUnloadedImages, everyNthImage);
+    updateMessage($hourWrapper, $hourWrapper.find('.loaded').length, numUnloadedImages, everyNthImage);
   } else {
     $unloadedImages.each(function() {
       loadImage($(this));
