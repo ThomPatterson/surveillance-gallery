@@ -15,6 +15,9 @@ let jpgDir = '/001/jpg';
 //set to something like 999999 to get all available days
 let daysToFetch = 7;
 
+//array of filenames to ignore
+let ignoreFiles = ['.DS_Store']
+
 //store jpg paths in multi dimension array, [date][hour][minute] = [paths]
 
 //TODO
@@ -106,7 +109,7 @@ function getAvailableHours(data) {
           if (err) return rej('Unable to read directory ' + dateDir + '  ' + err);
 
           fileNames.forEach(fileName => {
-            data[keyDate]['h' + fileName] = {}
+            if (!isIgnoredFile(fileName)) data[keyDate]['h' + fileName] = {}
           });
 
           return res();
@@ -139,7 +142,7 @@ function getAvailableMinutes(data) {
             if (err) return rej('Unable to read directory ' + dir + '  ' + err);
 
             fileNames.forEach(fileName => {
-              data[keyDate][keyHour]['m' + fileName] = [];
+              if (!isIgnoredFile(fileName)) data[keyDate][keyHour]['m' + fileName] = [];
             });
 
             return res();
@@ -175,7 +178,7 @@ function getAvailableSnapshots(data) {
               if (err) return rej('Unable to read directory ' + dir + '  ' + err);
 
               fileNames.forEach(fileName => {
-                data[keyDate][keyHour][keyMin].push(path.join(dir, fileName));
+                if (!isIgnoredFile(fileName)) data[keyDate][keyHour][keyMin].push(path.join(dir, fileName));
               });
 
               return res();
@@ -226,6 +229,10 @@ function filterDates(data, days) {
     }
   }
   return filteredDates;
+}
+
+function isIgnoredFile(fileName) {
+  return (ignoreFiles.indexOf(fileName) > -1);
 }
 
 let galleryTemplate;
