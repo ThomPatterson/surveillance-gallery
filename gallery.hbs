@@ -14,11 +14,11 @@
   <ul class="accordion">
     {{#each date}}
       <li>
-        <a class="toggle" href="javascript:void(0);">{{Date @key}}</a>
+        <a class="toggle" href="javascript:void(0);">{{Date @key}} ({{ImageCountDay this}} images)</a>
         <ul class="inner">
           {{#each this}}
             <li>
-              <a class="toggle hour" href="javascript:void(0);">{{Hour @key}} <span class="imageCount">({{ImageCount this}} images)</span></a>
+              <a class="toggle hour" href="javascript:void(0);">{{Hour @key}} <span class="imageCount">({{ImageCountHour this}} images)</span></a>
               <ul class="inner">
                 {{#each this}}
                   <li>

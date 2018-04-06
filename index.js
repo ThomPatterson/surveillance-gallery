@@ -22,7 +22,7 @@ let daysToFetch = 7;
 
 Handlebars.registerHelper('Date', (dateStr) => {
   var date = moment(dateStr);
-  return date.format('MMMM DD, YYYY (ddd)');
+  return date.format('ddd, MMMM DD, YYYY');
 });
 
 Handlebars.registerHelper('Hour', (hour) => {
@@ -39,7 +39,17 @@ Handlebars.registerHelper('Hour', (hour) => {
   return retStr
 });
 
-Handlebars.registerHelper('ImageCount', (hourData) => {
+Handlebars.registerHelper('ImageCountDay', (dayData) => {
+  let count = 0;
+  for (hourData in dayData) {
+    for (minute in dayData[hourData]) {
+      count += dayData[hourData][minute].length;
+    }
+  }
+  return count;
+});
+
+Handlebars.registerHelper('ImageCountHour', (hourData) => {
   let count = 0;
   for (minute in hourData) {
     count += hourData[minute].length;

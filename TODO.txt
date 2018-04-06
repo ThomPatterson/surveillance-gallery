@@ -1,5 +1,4 @@
-Better accordion view for galleryTemplate
-Hour header scrolls with screen until next hour header
+Show image count at day level
 
 automatically have today expanded
 
