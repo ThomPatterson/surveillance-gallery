@@ -37,7 +37,9 @@ Handlebars.registerHelper('Hour', (hour) => {
   }
   let retStr = hourInt + ':00 ' + period;
   if (hourInt == 0) {
-    retStr = 'Midnight'
+    retStr = 'Midnight';
+  } else if (hourInt == 12) {
+    retStr = 'Noon';
   }
   return retStr
 });
@@ -68,6 +70,8 @@ Handlebars.registerHelper('Timestamp', (filePath) => {
   let period = 'AM';
   if (hourInt > 12) {
     hourInt = hourInt - 12;
+    period = 'PM';
+  } else if (hourInt == 12) {
     period = 'PM';
   }
   return hourInt + ':' + min + ':' + sec + ' ' + period;
