@@ -6,7 +6,7 @@ const moment = require('moment');
          YYYY-MM-DD   HH  Array of objects for that hour
 results['2018-05-31'][19][{filename:<filename>, datetime: <datetime>},...]
 */
-var results = [];
+var results;
 
 function findFilesInDir(startPath, filter, earliestDateMs) {
 
@@ -48,7 +48,7 @@ function addFileToResults(filename, stat) {
 }
 
 module.exports = function(startDir, ext, daysToFetch) {
-  console.log('Finding files in ' + startDir + ' with extension ' + ext);
+  results = [];
   let now = new Date();
   let timeLimit = daysToFetch * 24 * 60 * 60 * 1000;
   let earliestDate = now - timeLimit;

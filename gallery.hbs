@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Snapshot Gallery</title>
+  <title>{{name}}</title>
   <link href="style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -13,7 +13,7 @@
 <body>
 
   <ul class="accordion">
-    {{#eachProperty this}}
+    {{#eachProperty files}}
       <li>
         <a class="toggle day" href="javascript:void(0);">{{Date property}} ({{ImageCountDay value}} images)</a>
         <ul class="inner">
