@@ -7,11 +7,16 @@ module.exports = [
     name: "Breezeway",
     directory: "/Volumes/surveillance-breezeway",
     fileExt: '.jpg',
-    daysToFetch: 2
+    daysToFetch: 7
   },{
     name: "Driveway",
     directory: "/Volumes/surveillance-driveway",
     fileExt: '.jpg',
-    daysToFetch: 1
+    daysToFetch: 7
+  },{
+    name: "Backyard",
+    directory: "/Volumes/surveillance-backyard",
+    fileExt: '.jpg',
+    daysToFetch: 7
   }
 ]
