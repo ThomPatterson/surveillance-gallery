@@ -5,7 +5,7 @@ const Handlebars = require('handlebars');
 const moment = require('moment');
 
 //to begin, assume the remote directory is mounted locally on this machine
-let dvrWorkDir = '/Volumes/backyard-ptz';
+let dvrWorkDir = '/Volumes/surveillance-backyard';
 
 //also assuming there is only one camera
 let jpgDir = '/001/jpg';
