@@ -14,9 +14,11 @@ $(document).ready(function() {
 	});
 
 	//expand and scroll to the most recent day
-	$('#newestDay').click();
+	let $newestDay = $('.day:last')
+
+	$newestDay.click();
 	$('html, body').animate({
-		scrollTop: $('#newestDay').offset().top
+		scrollTop: $newestDay.offset().top
 	}, 2000);
 
 	//show modal when image is clicked
