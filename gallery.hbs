@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Snapshot Gallery</title>
+  <title>{{name}}</title>
   <link href="style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -13,32 +13,29 @@
 <body>
 
   <ul class="accordion">
-    {{#each date}}
+    {{#eachProperty files}}
       <li>
-        <a class="toggle" {{#if @last}} id="newestDay" {{/if}} href="javascript:void(0);">{{Date @key}} ({{ImageCountDay this}} images)</a>
+        <a class="toggle day" href="javascript:void(0);">{{Date property}} ({{ImageCountDay value}} images)</a>
         <ul class="inner">
-          {{#each this}}
+          {{#eachProperty value}}
             <li>
-              <a class="toggle hour" href="javascript:void(0);">{{Hour @key}} <span class="imageCount">({{ImageCountHour this}} images)</span></a>
+              <a class="toggle hour" href="javascript:void(0);">{{Hour property}} <span class="imageCount">({{ImageCountHour value}} images)</span></a>
               <ul class="inner">
                 <li>
-                  {{#each this}}
-                    {{#each this}}
-                      <div class="imageWrapper notLoaded" data-url="file://{{this}}">
-                        <img src="#" alt="Snapshot at {{Timestamp this}}" />
-                        <p>{{Timestamp this}}</p>
-                      </div>
-                    {{/each}}
-                  {{/each}}
+                  {{#eachProperty value}}
+                    <div class="imageWrapper notLoaded" data-url="file://{{value.filename}}">
+                      <img src="#" alt="Snapshot at {{Timestamp value.datetime}}" />
+                      <p>{{Timestamp value.datetime}}</p>
+                    </div>
+                  {{/eachProperty}}
                 </li>
               </ul>
             </li>
-          {{/each}}
+          {{/eachProperty}}
         </ul>
       </li>
-    {{/each}}
+    {{/eachProperty}}
   </ul>
-
 
 </body>
 
