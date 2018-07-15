@@ -54,4 +54,8 @@ module.exports = function() {
   Handlebars.registerHelper('ImageCountHour', (hourData) => {
     return hourData.length;
   });
+
+  Handlebars.registerHelper('ProxyFile', (filePath, origDir, locationName) => {
+    return filePath.replace(origDir, `/images/${locationName.toLowerCase()}`);
+  });
 }

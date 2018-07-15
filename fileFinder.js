@@ -28,7 +28,8 @@ function findFilesInDir(startPath, filter, earliestDateMs) {
 }
 
 function addFileToResults(filename, stat) {
-  var date = moment(stat.ctimeMs);
+  //var date = moment(stat.ctimeMs);
+  var date = moment(stat.mtimeMs);//just for now
   let dateStr = date.format('YYYY_MM_DD');
   let hourStr = 'h' + date.format('HH');
 
@@ -42,7 +43,7 @@ function addFileToResults(filename, stat) {
 
   results[dateStr][hourStr].push({
     filename,
-    datetime: stat.ctimeMs
+    datetime: stat.mtimeMs//this too
   });
 
 }

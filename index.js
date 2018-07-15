@@ -1,61 +1,28 @@
-const fs = require('fs');
+const express = require('express');
+const app = express();
 const path = require('path');
-const childProc = require('child_process');
-const Handlebars = require('handlebars');
+const config = require('./config.js'); //eventually try loading this from ENV var first
+const galleryBuilder = require('./galleryBuilder.js');
 
-const fileFinder = require('./fileFinder.js');
-const registerHelpers = require('./hbsHelpers.js');
-const config = require('./config.js');
-
-let galleryTemplate;
-
-
-function getTemplate() {
-  return new Promise((resolve, reject) => {
-    fs.readFile('./gallery.hbs', (err, data) => {
-      if (err) return reject(err);
-      resolve(data.toString());
-    })
-  });
-}
-
-function writeHtml(html, name) {
-  return new Promise((resolve, reject) => {
-    let filePath = 'output/' + name + '.html';
-    fs.writeFile(filePath, html, function(err) {
-      if (err) return reject(err);
-      resolve(filePath);
+config.forEach(location => {
+  //create gallery endpoint
+  app.get('/'+location.name.toLowerCase(), (req, res) => {
+    galleryBuilder(location).then(html => {
+      res.send(html);
     });
   });
-}
 
-function recProcessFiles(configIndex) {
-  if (configIndex < config.length) {
-    let location = config[configIndex];
-    let files = fileFinder(location.directory, location.fileExt, location.daysToFetch);
-    let html = galleryTemplate({
-      name: location.name,
-      files
-    });
-    writeHtml(html, location.name).then(filePath => {
-      let cmd = 'open -a "Google Chrome" "file://' + __dirname + '/' + filePath + '"';
-      childProc.exec(cmd);
-      recProcessFiles(configIndex+1);
-    }).catch(err => {
-      console.error(err);
-    });
-  }
-}
+  //create static proxy for images
+  app.use(`/images/${location.name.toLowerCase()}`, express.static(location.directory));
 
-function processFiles() {
-  recProcessFiles(0);
-}
+  //inform the caller of the url
+  console.log(`http://localhost:8080/${location.name.toLowerCase()}`);
+});
 
-getTemplate()
-  .then(templateSrc => {
-    registerHelpers();
-    galleryTemplate = Handlebars.compile(templateSrc);
-    processFiles();
-  }).catch(err => {
-    console.error(err);
-  });
+
+app.use('/gallery-resources', express.static('gallery-resources'));
+
+app.listen(8080);
+
+
+//http://localhost:8080/12/00/06/25[M][0@0][0].jpg

@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <title>{{name}}</title>
-  <link href="style.css" rel="stylesheet" type="text/css">
+  <link href="/gallery-resources/style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="script.js"></script>
+  <script src="/gallery-resources/script.js"></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
               <ul class="inner">
                 <li>
                   {{#eachProperty value}}
-                    <div class="imageWrapper notLoaded" data-url="file://{{value.filename}}">
+                    <div class="imageWrapper notLoaded" data-url="{{ProxyFile value.filename ../../../origDir ../../../name}}">
                       <img src="#" alt="Snapshot at {{Timestamp value.datetime}}" />
                       <p>{{Timestamp value.datetime}}</p>
                     </div>
