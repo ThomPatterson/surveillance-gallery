@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const config = require('./config.js'); //eventually try loading this from ENV var first
+const config = process.env.hasOwnProperty('CONFIG') ? JSON.parse(process.env.CONFIG) : require('./config.js');
 const galleryBuilder = require('./galleryBuilder.js');
 
 config.forEach(location => {
@@ -23,6 +23,3 @@ config.forEach(location => {
 app.use('/gallery-resources', express.static('gallery-resources'));
 
 app.listen(8080);
-
-
-//http://localhost:8080/12/00/06/25[M][0@0][0].jpg
