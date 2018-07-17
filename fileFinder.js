@@ -9,7 +9,6 @@ results['2018-05-31'][19][{filename:<filename>, datetime: <datetime>},...]
 var results;
 
 function findFilesInDir(startPath, filter, earliestDateMs) {
-
   if (!fs.existsSync(startPath)) {
     console.log("directory unavailable: ", startPath);
     return;
@@ -28,8 +27,7 @@ function findFilesInDir(startPath, filter, earliestDateMs) {
 }
 
 function addFileToResults(filename, stat) {
-  //var date = moment(stat.ctimeMs);
-  var date = moment(stat.mtimeMs);//just for now
+  var date = moment(stat.ctimeMs);
   let dateStr = date.format('YYYY_MM_DD');
   let hourStr = 'h' + date.format('HH');
 
@@ -43,7 +41,7 @@ function addFileToResults(filename, stat) {
 
   results[dateStr][hourStr].push({
     filename,
-    datetime: stat.mtimeMs//this too
+    datetime: stat.ctimeMs
   });
 
 }
@@ -51,7 +49,7 @@ function addFileToResults(filename, stat) {
 module.exports = function(startDir, ext, daysToFetch) {
   results = [];
   let now = new Date();
-  now.setHours(23,59,59,999);//today at midnight
+  now.setHours(23, 59, 59, 999); //today at midnight
   let timeLimit = daysToFetch * 24 * 60 * 60 * 1000;
   let earliestDate = now - timeLimit;
   findFilesInDir(startDir, ext, earliestDate);
